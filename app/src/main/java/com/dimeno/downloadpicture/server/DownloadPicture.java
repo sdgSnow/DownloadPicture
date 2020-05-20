@@ -2,11 +2,13 @@ package com.dimeno.downloadpicture.server;
 
 import android.content.Context;
 import android.os.Environment;
+import android.provider.SyncStateContract;
 import android.util.Log;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.dimeno.downloadpicture.bean.BaseBean;
+import com.dimeno.downloadpicture.contants.Constans;
 import com.dimeno.downloadpicture.interf.IDownload;
 import com.dimeno.downloadpicture.utils.FileUtils;
 import com.dimeno.downloadpicture.utils.MyUtil;
@@ -34,8 +36,9 @@ public class DownloadPicture {
     private int downloadSuccess = 0;//记录下载成功的数量，成功加1
     private int downloadFail = 0;//记录下载失败的数量，失败加1
     private int downloaded = 0;//记录已经下载的数量，成功失败都加1
-    private String localDir = "/DownloadPicture/";
-    private List<BaseBean> filelist;
+    private String localDir = "/DownloadPicture/";//本地存储路径
+    private List<BaseBean> filelist;//需下载图片列表
+    private String pictureFormat = Constans.JPG;//图片格式 默认为jpg
 
     public void download(final Context context, final IDownload iDownload) {
         if(filelist != null && filelist.size() > 0){
@@ -70,7 +73,7 @@ public class DownloadPicture {
                                 if (!appDir.exists()) {
                                     appDir.mkdirs();
                                 }
-                                String fileName = baseBean.getFilename();
+                                String fileName = baseBean.getFilename() + pictureFormat;
                                 File destFile = new File(appDir, fileName);
                                 //把gilde下载得到图片复制到定义好的目录中去
                                 try {
@@ -109,27 +112,13 @@ public class DownloadPicture {
     private DownloadPicture(DownloadPictureBuilder builder){
         this.localDir = builder.localDir;
         this.filelist = builder.filelist;
-    }
-
-    public String getLocalDir() {
-        return localDir;
-    }
-
-    public void setLocalDir(String localDir) {
-        this.localDir = localDir;
-    }
-
-    public List<BaseBean> getFilelist() {
-        return filelist;
-    }
-
-    public void setFilelist(List<BaseBean> filelist) {
-        this.filelist = filelist;
+        this.pictureFormat = builder.pictureFormat;
     }
 
     public static class DownloadPictureBuilder{
         private String localDir;
         private final List<BaseBean> filelist;
+        private String pictureFormat;
 
         public DownloadPictureBuilder(List<BaseBean> filelist) {
             this.filelist = filelist;
@@ -137,6 +126,11 @@ public class DownloadPicture {
 
         public DownloadPictureBuilder setLocalDir(String localDir){
             this.localDir = localDir;
+            return this;
+        }
+
+        public DownloadPictureBuilder setPictureFormat(String pictureFormat){
+            this.pictureFormat = pictureFormat;
             return this;
         }
 

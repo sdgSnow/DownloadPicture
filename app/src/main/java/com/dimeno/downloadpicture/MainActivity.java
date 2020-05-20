@@ -19,6 +19,7 @@ import static com.dimeno.downloadpicture.contants.Constans.PICTURE_02;
 import static com.dimeno.downloadpicture.contants.Constans.PICTURE_03;
 import static com.dimeno.downloadpicture.contants.Constans.PICTURE_04;
 import static com.dimeno.downloadpicture.contants.Constans.PICTURE_05;
+import static com.dimeno.downloadpicture.contants.Constans.PNG;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,11 +36,12 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0;i < paths.length; i++){
             BaseBean baseBean = new BaseBean();
             baseBean.setUrl(paths[i]);
-            baseBean.setFilename("picture" + i + ".jpg");
+            baseBean.setFilename("picture" + i);
             baseBeanList.add(baseBean);
         }
         new DownloadPicture.DownloadPictureBuilder(baseBeanList)
-                .setLocalDir("/00000000test/")
+                .setLocalDir("/0000/")
+                .setPictureFormat(PNG)
                 .build()
                 .download(MainActivity.this, new IDownload() {
             @Override
