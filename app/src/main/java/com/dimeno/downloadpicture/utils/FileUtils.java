@@ -2,6 +2,7 @@ package com.dimeno.downloadpicture.utils;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

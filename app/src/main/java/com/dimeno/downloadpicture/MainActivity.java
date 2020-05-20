@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.dimeno.downloadpicture.bean.BaseBean;
+import com.dimeno.downloadpicture.interf.IDownload;
 import com.dimeno.downloadpicture.server.DownloadPicture;
 
 import java.util.ArrayList;
@@ -37,8 +38,10 @@ public class MainActivity extends AppCompatActivity {
             baseBean.setFilename("picture" + i + ".jpg");
             baseBeanList.add(baseBean);
         }
-
-        new DownloadPicture().download(MainActivity.this, baseBeanList, new DownloadPicture.IDownload() {
+        new DownloadPicture.DownloadPictureBuilder(baseBeanList)
+                .setLocalDir("/00000000test/")
+                .build()
+                .download(MainActivity.this, new IDownload() {
             @Override
             public void start() {
                 Log.i("download","start");
