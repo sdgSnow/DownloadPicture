@@ -19,6 +19,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -56,7 +57,7 @@ public class DownloadPicture {
                     }
                 });
                 fileObservable.subscribeOn(Schedulers.io())
-                        .observeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Consumer<File>() {
                             @Override
                             public void accept(File file) throws Exception {

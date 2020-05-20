@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void progress(int progress) {
+                Toast.makeText(MainActivity.this,"当前进度为：" + progress,Toast.LENGTH_SHORT).show();
                 Log.i("download","当前进度为：" + progress);
             }
 
